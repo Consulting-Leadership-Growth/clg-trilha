@@ -164,12 +164,14 @@ export function RoadmapGraph({ list, nextModuleId, showTrack = false }: RoadmapG
                 <div
                   key={`${band.phase.id}-${rowIndex}`}
                   /*
-                   * Sem quebra de linha: cada fileira é um nível de dependência,
-                   * e uma fileira quebrada em duas linhas lê como dois níveis
-                   * que não existem. Na visão geral algumas passam de 1152px —
-                   * aí o container rola na horizontal, que é honesto.
+                   * Quebra de linha permitida de propósito. Cada fileira é um
+                   * nível de dependência, e o ideal seria não quebrar — mas
+                   * forçar isso empurra a visão geral para 1928px e obriga a
+                   * rolar a home na horizontal, o que é pior. Os conectores são
+                   * medidos da posição real, então continuam corretos mesmo
+                   * quando uma fileira ocupa duas linhas.
                    */
-                  className="flex flex-nowrap justify-center gap-x-8"
+                  className="flex flex-wrap justify-center gap-x-8 gap-y-10"
                 >
                   {row.map((module) => (
                     <GraphNode
