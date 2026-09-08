@@ -1,0 +1,124 @@
+@import "@clg/design-system/theme.css";
+
+/* O design system é source-first e vive fora de src/: sem isto o Tailwind
+   não varre as classes usadas por CLGLogo e CLGSymbol. */
+@source "../../../../packages/design-system/src";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100dvh;
+  }
+
+  /* Superfícies do navegador: sem isto, a barra de rolagem, o caret e os
+     numerais ficam com o padrão do sistema, que não pertence a design nenhum. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border: 3px solid var(--color-background);
+    border-radius: var(--radius-lg);
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-muted-foreground);
+  }
+
+  input,
+  textarea {
+    caret-color: var(--color-primary);
+  }
+
+  /* Números que mudam (progresso, horas, dias) não devem dançar. */
+  [data-numeric] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  ::marker {
+    color: var(--color-muted-foreground);
+  }
+}
+
+@layer components {
+  /* Medida de leitura confortável para o corpo de texto dos módulos. */
+  .prose-measure {
+    max-width: 68ch;
+  }
+
+  /* Faixa que revela o conteúdo abaixo dela sem cortar o texto. */
+  .fade-edge {
+    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  }
+}
+
+@layer utilities {
+  /*
+   * Todo movimento aqui comunica estado, nunca decoração: `rise` para conteúdo
+   * que acabou de aparecer, `pulse-ring` para marcar o único módulo que é o
+   * próximo passo. O acender dos caminhos do roadmap é uma transição de cor
+   * declarada no próprio SVG, não um keyframe.
+   */
+  @keyframes clg-rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes clg-pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-primary) 45%, transparent);
+    }
+    70% {
+      box-shadow: 0 0 0 8px color-mix(in srgb, var(--color-primary) 0%, transparent);
+    }
+    100% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-primary) 0%, transparent);
+    }
+  }
+
+  .animate-rise {
+    animation: clg-rise 420ms cubic-bezier(0, 0, 0, 1) both;
+  }
+
+  .animate-current {
+    animation: clg-pulse-ring 2.4s cubic-bezier(0.2, 0, 0, 1) infinite;
+  }
+
+  /* Estados de foco dentro de linhas densas, sem deslocar o layout. */
+  .focus-inset:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: -2px;
+  }
+}
+
+/* theme.css já neutraliza transições e animações; isto cobre os keyframes
+   declarados acima, que precisam parar em um estado final visível. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise,
+  .animate-current {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

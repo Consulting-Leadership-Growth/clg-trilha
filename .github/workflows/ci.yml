@@ -1,0 +1,30 @@
+# Esta esteira é referência viva do módulo "GitHub Actions" da trilha.
+# Se você é o dev novo lendo isto: é este arquivo que roda quando você abre
+# uma PR, e é ele que você vai recriar no exercício daquele módulo.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Verificar tipos
+        run: npm run typecheck --workspaces --if-present
+
+      - name: Construir a aplicação
+        run: npm run build

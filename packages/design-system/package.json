@@ -1,0 +1,39 @@
+{
+  "name": "@clg/design-system",
+  "version": "0.2.0",
+  "private": false,
+  "description": "Design system da CLG: tokens de marca, tema shadcn/ui e componentes de identidade.",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "src",
+    "assets",
+    "components.json"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./tokens": "./src/tokens/index.ts",
+    "./brand": "./src/brand/index.ts",
+    "./theme.css": "./src/tokens/theme.css",
+    "./assets/*": "./assets/*"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18",
+    "tailwindcss": ">=4"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "typescript": "^5.7.0"
+  },
+  "license": "ISC"
+}

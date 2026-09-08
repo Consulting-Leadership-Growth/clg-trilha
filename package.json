@@ -1,0 +1,20 @@
+{
+  "name": "clg-trilha",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Trilha de onboarding da CLG: roadmap interativo de 90 dias para devs em formação.",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=trilha",
+    "build": "npm run build --workspace=trilha",
+    "preview": "npm run preview --workspace=trilha",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

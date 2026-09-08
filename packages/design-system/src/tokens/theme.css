@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --clg-gold: 46 67% 54%;
+  --clg-gold-strong: 46 72% 44%;
+  --clg-black: 0 0% 5%;
+  --clg-surface: 0 0% 8%;
+  --clg-elevated: 0 0% 11%;
+  --clg-line: 0 0% 16%;
+  --clg-mist: 0 0% 90%;
+  --clg-steel: 0 0% 40%;
+  /* `steel` sobre `black` rende 3.4:1 e reprova em AA para texto de corpo.
+     Este é o cinza mínimo legível sobre o fundo escuro (5.3:1); `steel`
+     segue valendo para borda, ícone decorativo e estado desabilitado.
+     No tema claro o próprio `steel` sobre branco dá 5.7:1 e é mantido. */
+  --clg-steel-text: 0 0% 52%;
+
+  --background: hsl(var(--clg-black));
+  --foreground: hsl(var(--clg-mist));
+  --card: hsl(var(--clg-surface));
+  --card-foreground: hsl(var(--clg-mist));
+  --popover: hsl(var(--clg-elevated));
+  --popover-foreground: hsl(var(--clg-mist));
+  --primary: hsl(var(--clg-gold));
+  --primary-foreground: hsl(var(--clg-black));
+  --secondary: hsl(var(--clg-elevated));
+  --secondary-foreground: hsl(var(--clg-mist));
+  --muted: hsl(var(--clg-surface));
+  --muted-foreground: hsl(var(--clg-steel-text));
+  --accent: hsl(var(--clg-elevated));
+  --accent-foreground: hsl(var(--clg-gold));
+  --destructive: hsl(6 63% 46%);
+  --destructive-foreground: hsl(var(--clg-mist));
+  --success: hsl(146 42% 40%);
+  --warning: hsl(39 74% 45%);
+  --border: hsl(var(--clg-line));
+  --input: hsl(var(--clg-line));
+  --ring: hsl(var(--clg-gold));
+
+  --radius: 0.625rem;
+
+  --font-display: "IBM Plex Sans", system-ui, sans-serif;
+  --font-sans: "Lato", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --duration-fast: 140ms;
+  --duration-base: 220ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.light {
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(var(--clg-black));
+  --card: hsl(0 0% 98%);
+  --card-foreground: hsl(var(--clg-black));
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(var(--clg-black));
+  --primary: hsl(var(--clg-gold-strong));
+  /* Branco sobre `goldStrong` rende 2.9:1 e reprova em AA. O preto da marca
+     dá 6.8:1 sobre o mesmo dourado, e mantém a coerência com o tema escuro,
+     onde o rótulo do botão primário também é escuro. */
+  --primary-foreground: hsl(var(--clg-black));
+  --secondary: hsl(0 0% 94%);
+  --secondary-foreground: hsl(var(--clg-black));
+  --muted: hsl(0 0% 96%);
+  --muted-foreground: hsl(var(--clg-steel));
+  --accent: hsl(0 0% 94%);
+  --accent-foreground: hsl(var(--clg-gold-strong));
+  --border: hsl(0 0% 89%);
+  --input: hsl(0 0% 89%);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  ::selection {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+}
+
+@layer utilities {
+  .clg-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted-foreground);
+  }
+
+  .clg-hairline {
+    border: 0;
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
